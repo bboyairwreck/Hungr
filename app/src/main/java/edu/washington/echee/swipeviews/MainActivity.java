@@ -1,6 +1,5 @@
 package edu.washington.echee.swipeviews;
 
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,7 +7,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
@@ -16,14 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 public class MainActivity extends Activity implements View.OnTouchListener {
-    ViewGroup _root;
-    LinearLayout cardView1;
-    private int _xDelta;
-    private int _yDelta;
-    private int screenWidth = 0;
-    public static final float MAX_ROTATION = 17f;
-    private float pivotX;
-    private float pivotY;
+    ViewGroup _root;                // root view
+    LinearLayout cardView1;         // current swipable card
+    private int _xDelta;            // distance card dragged in X-axis
+    private int screenWidth = 0;    // width of rootView
+    private float pivotX;           // rotation pivot X position
+    private float pivotY;           // rotation pivot Y position
+
+    public static final float MAX_ROTATION = 17f;   // max degrees to rotate card
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +40,6 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         cardView1.setLayoutParams(layoutParams);
         _root.addView(cardView1);
 
-//        cardView1.setOnTouchListener(this);
         _root.setOnTouchListener(this);
     }
 
@@ -60,8 +57,8 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         layoutParams.topMargin = 16;
         cardView1.setLayoutParams(layoutParams);
 
-        this.pivotX = cardWidth / 2;
-        this.pivotY = height * 2f;
+        this.pivotX = cardWidth / 2;    // set x pivot point center
+        this.pivotY = height * 2f;      // set y pivot point 2x below the height
 
         // set pivot location to bottom center
         cardView1.setPivotX(pivotX);
@@ -72,30 +69,29 @@ public class MainActivity extends Activity implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        final int X = (int) event.getRawX();
-        final int Y = (int) event.getRawY();
-        int dif;
-        float swipePercent;
+        final int X = (int) event.getRawX();    // X position of touch event
+        int dif;                                // temp xDelta
+        float swipePercent;                     // % of distance from center X to edge of screen
 
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             // On Press Down
             case MotionEvent.ACTION_DOWN:
-                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) this.cardView1.getLayoutParams();
-                _xDelta = X - (int)this.cardView1.getTranslationX();
-                _yDelta = Y - (int)this.cardView1.getTranslationY();
+                _xDelta = X - (int)this.cardView1.getTranslationX();    // track how far moved x
                 break;
             // On Drag
             case MotionEvent.ACTION_MOVE:
                 dif = X - _xDelta;
-
                 swipePercent = (float)dif / (float)screenWidth;
 
                 float rotation = swipePercent * MAX_ROTATION;
                 float alpha = (1f - Math.abs(swipePercent))*0.7f;
-                Log.i("OnTouch", "swipePercent = " + swipePercent + "; rotation = " + rotation+ "; alpha = " + alpha);
+
+                // set rotation, alpha, & translation
                 this.cardView1.setAlpha(alpha);
                 this.cardView1.setRotation(rotation);
                 this.cardView1.setTranslationX(dif);
+
+                Log.i("OnTouch", "swipePercent = " + swipePercent + "; rotation = " + rotation+ "; alpha = " + alpha);
                 break;
             // On Release
             case MotionEvent.ACTION_UP:
@@ -108,7 +104,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
                     this.cardView1.setRotation(0f);
                     this.cardView1.setTranslationX(0);
 
-                // Animate card off screen if reached swipe threshold
+                // Animate card off screen if did reach swipe threshold
                 } else {
                     int animDuration = 600;
                     float sign = 1;
@@ -118,17 +114,15 @@ public class MainActivity extends Activity implements View.OnTouchListener {
                     RotateAnimation rotateAnim = new RotateAnimation(0, MAX_ROTATION*sign, pivotX, pivotY);
                     rotateAnim.setDuration(animDuration);
                     rotateAnim.setRepeatCount(0);
-                    rotateAnim.setFillAfter(true);
 
                     TranslateAnimation translateAnim = new TranslateAnimation(0, (this.screenWidth)*sign, 0, 0);
                     translateAnim.setDuration(animDuration);
                     translateAnim.setRepeatCount(0);
-                    rotateAnim.setFillAfter(true);
 
                     AnimationSet animSet = new AnimationSet(true);
-                    animSet.setFillAfter(true);
                     animSet.addAnimation(rotateAnim);
                     animSet.addAnimation(translateAnim);
+                    animSet.setFillAfter(true);
 
                     this.cardView1.startAnimation(animSet);
                 }
