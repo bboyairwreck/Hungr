@@ -13,37 +13,50 @@ import android.widget.RelativeLayout;
 
 public class MainActivity extends Activity implements View.OnTouchListener {
     ViewGroup _root;
-    LinearLayout relativeLayout1;
+    LinearLayout cardView1;
     private int _xDelta;
     private int _yDelta;
+    private int screenWidth = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Get Root container
         _root = (ViewGroup) findViewById(R.id.root);
 
-        relativeLayout1 = new LinearLayout(this);
-        relativeLayout1.setId(1);
-        relativeLayout1.setBackgroundColor(Color.GREEN);
+        // Create card view
+        cardView1 = new LinearLayout(this);
+        cardView1.setBackgroundColor(Color.GREEN);
 
-        Log.i("MainActivity", "" + _root.getWidth());
-
+        // give it dummy height & width (change it later in onWindowFocusChanged())
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(300, 300); // width & height
-        relativeLayout1.setLayoutParams(layoutParams);
-        _root.addView(relativeLayout1);
+        cardView1.setLayoutParams(layoutParams);
+        _root.addView(cardView1);
 
-        relativeLayout1.setOnTouchListener(this);
-
+//        cardView1.setOnTouchListener(this);
+        _root.setOnTouchListener(this);
     }
 
+    /*
+     * Since cannot get root width onCreate because view hasn't loaded by then, get width here
+     * Set the pivot position to
+     */
     @Override
     public void onWindowFocusChanged(boolean b) {
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(_root.getWidth()-32, 300); // width & height
+        this.screenWidth = _root.getWidth();
+        int cardWidth = this.screenWidth-32;
+        int height = 300;
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(cardWidth, height); // width & height
         layoutParams.leftMargin = 16;
         layoutParams.topMargin = 16;
-        relativeLayout1.setLayoutParams(layoutParams);
+        cardView1.setLayoutParams(layoutParams);
+
+        // set pivot location to bottom center
+        cardView1.setPivotX(cardWidth / 2);
+        cardView1.setPivotY(height * 2);
+
     }
 
 
@@ -54,17 +67,21 @@ public class MainActivity extends Activity implements View.OnTouchListener {
 
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
-                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) v.getLayoutParams();
-                _xDelta = X - layoutParams.leftMargin;
-                _yDelta = Y - layoutParams.topMargin;
-                Log.i("OnTouch", "DOWN == " + _yDelta);
-                Log.i("OnTouch", "LEFT == " + _xDelta);
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) this.cardView1.getLayoutParams();
+                _xDelta = X - (int)this.cardView1.getTranslationX();
+                _yDelta = Y - (int)this.cardView1.getTranslationY();
+//                Log.i("OnTouch", "DOWN == " + _yDelta);
+//                Log.i("OnTouch", "LEFT == " + _xDelta);
                 break;
             case MotionEvent.ACTION_MOVE:
-                RelativeLayout.LayoutParams layoutParams2 = (RelativeLayout.LayoutParams) v.getLayoutParams();
                 int dif = X - _xDelta;
-                layoutParams2.leftMargin = dif;
-                v.setLayoutParams(layoutParams2);
+
+                float rotation = ((float)dif / (float)screenWidth) * 15f;
+//                Log.i("OnTouch", "dif = " + dif);
+//                Log.i("OnTouch", "screenWidth = " + screenWidth);
+                Log.i("OnTouch", "rotation = " + rotation);
+                this.cardView1.setRotation(rotation);
+                this.cardView1.setTranslationX(dif);
                 break;
         }
         _root.invalidate();
