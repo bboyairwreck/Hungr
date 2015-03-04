@@ -1,3 +1,7 @@
+/**
+ * 3/3/15
+ * @author Eric Chee
+ */
 package edu.washington.echee.swipeviews;
 
 import android.app.Activity;
@@ -37,8 +41,8 @@ public class MainActivity extends Activity implements View.OnTouchListener {
     }
 
     /*
-     * Since cannot get root width onCreate because view hasn't loaded by then, get width here
-     * Set the pivot position to
+     * Since cannot get root width onCreate because view hasn't loaded by then, get width here.
+     * Add max num or cards to root view
      */
     @Override
     public void onWindowFocusChanged(boolean b) {
