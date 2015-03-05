@@ -9,6 +9,6 @@
     <string name="title">Hungr</string>
     <string name="username_hint">username</string>
     <string name="password_hint">password</string>
-    <string name="login">Log In</string>
+    <string name="login">LOG IN</string>
 
 </resources>
