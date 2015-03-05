@@ -5,5 +5,10 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="fooFragment">fooFragment</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title">Hungr</string>
+    <string name="username_hint">username</string>
+    <string name="password_hint">password</string>
+    <string name="login">Log In</string>
 
 </resources>

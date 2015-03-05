@@ -5,6 +5,7 @@
 package edu.washington.echee.swipeviews;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +19,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-public class MainActivity extends Activity implements View.OnTouchListener {
+public class SwipeActivity extends Activity implements View.OnTouchListener {
     ViewGroup _root;                // root view
     private int _xDelta;            // distance card dragged in X-axis
     private int screenWidth = 0;    // width of rootView
@@ -38,6 +39,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         // Get Root container
         _root = (ViewGroup) findViewById(R.id.root);
         this.numCards = MAX_CARDS;
+
     }
 
     /*
@@ -183,18 +185,18 @@ public class MainActivity extends Activity implements View.OnTouchListener {
             _root.post(new Runnable() {
                 public void run() {
                     // it works without the runOnUiThread, but all UI updates must be done on the UI thread
-                    MainActivity.this.runOnUiThread(new Runnable() {
+                    SwipeActivity.this.runOnUiThread(new Runnable() {
                         public void run() {
                             _root.removeView(v);        // removes card from root view
                             Log.i("onAnimationEnd", "Card removed");
 
-                            MainActivity.this.numCards--; // decrement number of cards
+                            SwipeActivity.this.numCards--; // decrement number of cards
 
                             // If down to MIN_CARDS, add more cards
                             if (numCards <= MIN_CARDS) {
                                 int numOfAddedCards = MAX_CARDS - numCards;
-                                MainActivity.this.addCards(numOfAddedCards);
-                                MainActivity.this.numCards += numOfAddedCards;
+                                SwipeActivity.this.addCards(numOfAddedCards);
+                                SwipeActivity.this.numCards += numOfAddedCards;
 
                                 Log.i("onAnimationEnd", "Added " + numOfAddedCards + " cards to root view");
                             }
