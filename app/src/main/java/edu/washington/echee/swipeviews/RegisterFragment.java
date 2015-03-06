@@ -43,13 +43,17 @@ public class RegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_register, container, false);
 
+        addValidationListeners(view);
+
         Button btnRegister = (Button) view.findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i("RegisterFragment", "Register button clicked");
-                if (validateFields(view)){
-                    // hostActivity.showSwipe(); // TODO enable this
+                if (hasAllValidFields(view)) {
+                    // todo write to file
+
+                    hostActivity.showSwipe();
                 }
             }
         });
@@ -57,35 +61,91 @@ public class RegisterFragment extends Fragment {
         return view;
     }
 
-
-    public boolean validateFields(View view){
-        Log.i("RegisterFragment", "validatingFields");
-
+    private void addValidationListeners(View view){
         EditText etName = (EditText) view.findViewById(R.id.etName_register);
-        name = setValidIcon(etName, true, TextValidator.isNotEmpty(etName));
+        etName.addTextChangedListener(new TextValidator(etName) {
+            @Override
+            public void validate(TextView textView, String text) {
+                name = setValidIcon(textView, true, TextValidator.isNotEmpty(textView));
+            }
+        });
 
         EditText etEmail = (EditText) view.findViewById(R.id.etEmail);
-        email = setValidIcon(etEmail, true,
-                (TextValidator.isNotEmpty(etEmail) && TextValidator.isEmail(etEmail)));
+        etEmail.addTextChangedListener(new TextValidator(etEmail) {
+            @Override
+            public void validate(TextView textView, String text) {
+                email = setValidIcon(textView, true,
+                        (TextValidator.isNotEmpty(textView) && TextValidator.isEmail(textView)));
+            }
+        });
+
 
         EditText etUsername = (EditText) view.findViewById(R.id.etUsername_register);
-        username = setValidIcon(etUsername, true, TextValidator.isNotEmpty(etUsername));
+        etUsername.addTextChangedListener(new TextValidator(etUsername) {
+            @Override
+            public void validate(TextView textView, String text) {
+                username = setValidIcon(textView, true, TextValidator.isNotEmpty(textView));
+            }
+        });
 
-        EditText etPassword = (EditText) view.findViewById(R.id.etPassword_register);
-        password = setValidIcon(etPassword, false, TextValidator.isNotEmpty(etPassword));
 
-        EditText etPasswordConfirm = (EditText) view.findViewById(R.id.etPasswordConfirm_register);
-        String passwordConfirm = setValidIcon(etPasswordConfirm, false,
-                (TextValidator.isNotEmpty(etPasswordConfirm) && TextValidator.isSame(etPassword, etPasswordConfirm)));
+        final EditText etPassword = (EditText) view.findViewById(R.id.etPassword_register);
+        final EditText etPasswordConfirm = (EditText) view.findViewById(R.id.etPasswordConfirm_register);
 
-        if (passwordConfirm == null) {
-            password = null;
-        }
+        etPassword.addTextChangedListener(new TextValidator(etPassword) {
+            @Override
+            public void validate(TextView textView, String text) {
+                password = setValidIcon(textView, false, TextValidator.isNotEmpty(textView));
+
+                if (setValidIcon(etPasswordConfirm, false,
+                        (TextValidator.isNotEmpty(etPasswordConfirm) && TextValidator.isSame(etPassword, etPasswordConfirm))) == null){
+                    password = null;
+                }
+            }
+        });
+
+
+        etPasswordConfirm.addTextChangedListener(new TextValidator(etPasswordConfirm) {
+            @Override
+            public void validate(TextView textView, String text) {
+                if (setValidIcon(textView, false,
+                        (TextValidator.isNotEmpty(textView) && TextValidator.isSame(etPassword, etPasswordConfirm))) != null){
+                    password = etPassword.getText().toString();
+                }
+            }
+        });
+
+    }
+
+
+    public boolean hasAllValidFields(View view){
+        Log.i("RegisterFragment", "validatingFields");
+
+//        EditText etName = (EditText) view.findViewById(R.id.etName_register);
+//        name = setValidIcon(etName, true, TextValidator.isNotEmpty(etName));
+//
+//        EditText etEmail = (EditText) view.findViewById(R.id.etEmail);
+//        email = setValidIcon(etEmail, true,
+//                (TextValidator.isNotEmpty(etEmail) && TextValidator.isEmail(etEmail)));
+//
+//        EditText etUsername = (EditText) view.findViewById(R.id.etUsername_register);
+//        username = setValidIcon(etUsername, true, TextValidator.isNotEmpty(etUsername));
+//
+//        EditText etPassword = (EditText) view.findViewById(R.id.etPassword_register);
+//        password = setValidIcon(etPassword, false, TextValidator.isNotEmpty(etPassword));
+//
+//        EditText etPasswordConfirm = (EditText) view.findViewById(R.id.etPasswordConfirm_register);
+//        String passwordConfirm = setValidIcon(etPasswordConfirm, false,
+//                (TextValidator.isNotEmpty(etPasswordConfirm) && TextValidator.isSame(etPassword, etPasswordConfirm)));
+//
+//        if (passwordConfirm == null) {
+//            password = null;
+//        }
 
         return (name != null && email != null && username != null && password != null);
     }
 
-    private String setValidIcon(EditText editText, boolean trim, boolean test) {
+    private String setValidIcon(TextView editText, boolean trim, boolean test) {
 
         String result = null;
         if (test) {
