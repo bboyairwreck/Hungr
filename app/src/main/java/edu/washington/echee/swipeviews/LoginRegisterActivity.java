@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 
 
 public class LoginRegisterActivity extends Activity {
@@ -22,10 +23,18 @@ public class LoginRegisterActivity extends Activity {
 
 
         if (savedInstanceState == null) {
-//            FragmentManager fm = getFragmentManager();
-//            fm.beginTransaction()
-//                    .add(R.id.container, new PlaceholderFragment())
-//                    .commit();
+
         }
+    }
+
+    public void showRegister(){
+        Log.i("fragment", "loading Register fragment");
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        RegisterFragment fragment = new RegisterFragment();
+
+        ft.replace(R.id.loginActivityRoot, fragment);   // replace instead of add
+        ft.addToBackStack("Register Fragment");
+        ft.commit();
     }
 }

@@ -7,9 +7,17 @@
     <string name="fooFragment">fooFragment</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title">Hungr</string>
+    <string name="register_title">Register</string>
     <string name="username_hint">username</string>
     <string name="password_hint">password</string>
+    <string name="passwordConfirm_hint">confirm password</string>
     <string name="login">LOG IN</string>
+    <string name="register">Register</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name_hint">name</string>
+    <string name="email_hint">email</string>
+
 
 
     <string-array name="nav_drawer_list">

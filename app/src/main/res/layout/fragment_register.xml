@@ -1,0 +1,104 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="edu.washington.echee.swipeviews.LoginFragment"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    >
+
+    <TextView
+        android:id="@+id/registration_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/register_title"
+        android:gravity="center"
+        android:textSize="60sp"
+        android:textColor="@color/orange_main"/>
+
+    <EditText
+        android:id="@+id/etName_register"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/registration_title"
+        android:background="#66000000"
+        android:textColorHint="#BEBEBE"
+        android:textColor="@color/white"
+        android:hint="@string/name_hint"
+        android:padding="5dp"
+        />
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/etName_register"
+        android:background="#66000000"
+        android:textColorHint="#BEBEBE"
+        android:textColor="@color/white"
+        android:hint="@string/email_hint"
+        android:padding="5dp"
+        />
+
+    <EditText
+        android:id="@+id/etUsername_register"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/etEmail"
+        android:background="#66000000"
+        android:textColorHint="#BEBEBE"
+        android:textColor="@color/white"
+        android:hint="@string/username_hint"
+        android:padding="5dp"
+        />
+
+    <EditText
+        android:id="@+id/etPassword_register"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/etUsername_register"
+        android:background="#66000000"
+        android:textColorHint="#BEBEBE"
+        android:textColor="@color/white"
+        android:hint="@string/password_hint"
+        android:padding="5dp"
+        android:inputType="textPassword"
+        />
+    <EditText
+        android:id="@+id/etPasswordConfirm_register"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/etPassword_register"
+        android:background="#66000000"
+        android:textColorHint="#BEBEBE"
+        android:textColor="@color/white"
+        android:hint="@string/passwordConfirm_hint"
+        android:padding="5dp"
+        android:inputType="textPassword"
+        />
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="@string/register"
+        android:textColor="@color/white"
+        android:layout_below="@id/etPasswordConfirm_register"
+        android:layout_marginTop="30dp"
+        android:padding="5dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/orange_main"
+        />
+
+
+
+</RelativeLayout>
