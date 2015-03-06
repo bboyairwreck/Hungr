@@ -11,4 +11,12 @@
     <string name="password_hint">password</string>
     <string name="login">LOG IN</string>
 
+
+    <string-array name="nav_drawer_list">
+        <item>How</item>
+        <item>You</item>
+        <item>Doing</item>
+        <item>Baby</item>
+    </string-array>
+
 </resources>

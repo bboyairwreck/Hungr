@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,10 +17,17 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-public class SwipeActivity extends Activity implements View.OnTouchListener {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class SwipeActivity extends ActionBarActivity implements View.OnTouchListener {
     ViewGroup _root;                // root view
     private int _xDelta;            // distance card dragged in X-axis
     private int screenWidth = 0;    // width of rootView
@@ -40,6 +48,17 @@ public class SwipeActivity extends Activity implements View.OnTouchListener {
         _root = (ViewGroup) findViewById(R.id.root);
         this.numCards = MAX_CARDS;
 
+        String[] stringArr = getResources().getStringArray(R.array.nav_drawer_list);
+        ArrayList<String> navDrawerList = new ArrayList<String>(Arrays.asList(stringArr)); //Create nav_drawer elements list
+        ListView lvNavDrawer = (ListView) findViewById(R.id.lvNavDrawer);
+        lvNavDrawer.setAdapter(new NavDrawerListAdapter(this, R.layout.nav_drawer_list_layout, navDrawerList));
+        lvNavDrawer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
     }
 
     /*
@@ -58,15 +77,16 @@ public class SwipeActivity extends Activity implements View.OnTouchListener {
      *      Must be done AFTER root view is loaded i.e. onWindowFocus() but NOT in onCreate()
      */
     public void addCards(int size) {
-        int cardWidth = this.screenWidth-32;    // width of each card
+        int cardMargin = 32;
+        int cardWidth = this.screenWidth - (cardMargin * 2);    // width of each card
         int height = cardWidth;                       // height of each card
 
         // Create cards in add to root view
         for (int i = 0; i < size; i++) {
             LinearLayout card = new LinearLayout(this);
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(cardWidth, height); // width & height
-            layoutParams.leftMargin = 16;
-            layoutParams.topMargin = 16;
+            layoutParams.leftMargin = cardMargin;
+            layoutParams.topMargin = cardMargin;
             card.setLayoutParams(layoutParams);
 
             // TODO Delete. Each card alternates between Green & RED
