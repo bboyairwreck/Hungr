@@ -24,6 +24,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/registration_title"
         android:background="#66000000"
+        android:inputType="textCapSentences"
         android:textColorHint="#BEBEBE"
         android:textColor="@color/white"
         android:hint="@string/name_hint"
