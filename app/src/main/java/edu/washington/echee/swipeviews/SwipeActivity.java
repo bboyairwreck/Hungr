@@ -24,7 +24,9 @@ import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -45,6 +47,8 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
     public static final float MAX_ROTATION = 17f;   // max degrees to rotate card
     public static final int MAX_CARDS = 5;         // max number of cards on screen at a time
     public static final int MIN_CARDS = 2;         // min number of cards on screen at a time
+    public static final float GO_LEFT = -1000f;   // max degrees to rotate card
+    public static final float GO_RIGHT = 1000f;   // max degrees to rotate card
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,19 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
 
         // Get Root container
         _root = (ViewGroup) findViewById(R.id.root);
+
+        ImageButton btnNope = (ImageButton) findViewById(R.id.btnNope);
+        ImageButton btnYeah = (ImageButton) findViewById(R.id.btnYeah);
+        ImageButton btnInfo = (ImageButton) findViewById(R.id.btnInfo);
+
+        btnNope.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.nope, 100, 100));
+        btnYeah.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.yeah, 100, 100));
+        btnInfo.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.info, 100, 100));
+
+
         this.numCards = MAX_CARDS;
 
         String[] stringArr = getResources().getStringArray(R.array.nav_drawer_list);
@@ -76,6 +93,13 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
     public void onWindowFocusChanged(boolean b) {
         this.screenWidth = _root.getWidth();
         addCards(MAX_CARDS);
+
+        ImageButton btnNope = (ImageButton) findViewById(R.id.btnNope);
+        ImageButton btnYeah = (ImageButton) findViewById(R.id.btnYeah);
+        ImageButton btnInfo = (ImageButton) findViewById(R.id.btnInfo);
+
+        btnNope.setOnClickListener(decisionButtonListener(GO_LEFT));
+        btnYeah.setOnClickListener(decisionButtonListener(GO_RIGHT));
     }
 
     /*
@@ -233,27 +257,28 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
 
                 // Animate card off screen if did reach swipe threshold
                 } else {
-                    int animDuration = 600;
-                    float sign = 1;
-                    if (v.getRotation() < 0) {
-                        sign = -1;
-                    }
-                    RotateAnimation rotateAnim = new RotateAnimation(0, MAX_ROTATION*sign, pivotX, pivotY);
-                    rotateAnim.setDuration(animDuration);
-                    rotateAnim.setRepeatCount(0);
-
-                    TranslateAnimation translateAnim = new TranslateAnimation(0, (this.screenWidth)*sign, 0, 0);
-                    translateAnim.setDuration(animDuration);
-                    translateAnim.setRepeatCount(0);
-
-                    AnimationSet animSet = new AnimationSet(true);
-                    animSet.addAnimation(rotateAnim);
-                    animSet.addAnimation(translateAnim);
-                    animSet.setFillAfter(true);
-                    animSet.setAnimationListener(new MyAnimationListener(v));
-
-                    // Animate card off screen and remove it
-                    v.startAnimation(animSet);
+//                    int animDuration = 600;
+//                    float sign = 1;
+//                    if (v.getRotation() < 0) {
+//                        sign = -1;
+//                    }
+//                    RotateAnimation rotateAnim = new RotateAnimation(0, MAX_ROTATION*sign, pivotX, pivotY);
+//                    rotateAnim.setDuration(animDuration);
+//                    rotateAnim.setRepeatCount(0);
+//
+//                    TranslateAnimation translateAnim = new TranslateAnimation(0, (this.screenWidth)*sign, 0, 0);
+//                    translateAnim.setDuration(animDuration);
+//                    translateAnim.setRepeatCount(0);
+//
+//                    AnimationSet animSet = new AnimationSet(true);
+//                    animSet.addAnimation(rotateAnim);
+//                    animSet.addAnimation(translateAnim);
+//                    animSet.setFillAfter(true);
+//                    animSet.setAnimationListener(new MyAnimationListener(v));
+//
+//                    // Animate card off screen and remove it
+//                    v.startAnimation(animSet);
+                    animateCardOff(v , v.getRotation());
                 }
 
                 Log.i("OnTouch", "Touch Released");
@@ -262,6 +287,30 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
         }
         _root.invalidate();
         return true;
+    }
+
+    private void animateCardOff(View v, float rotation){
+        int animDuration = 600;
+        float sign = 1;
+        if (rotation < 0) {
+            sign = -1;
+        }
+        RotateAnimation rotateAnim = new RotateAnimation(0, MAX_ROTATION*sign, pivotX, pivotY);
+        rotateAnim.setDuration(animDuration);
+        rotateAnim.setRepeatCount(0);
+
+        TranslateAnimation translateAnim = new TranslateAnimation(0, (this.screenWidth)*sign, 0, 0);
+        translateAnim.setDuration(animDuration);
+        translateAnim.setRepeatCount(0);
+
+        AnimationSet animSet = new AnimationSet(true);
+        animSet.addAnimation(rotateAnim);
+        animSet.addAnimation(translateAnim);
+        animSet.setFillAfter(true);
+        animSet.setAnimationListener(new MyAnimationListener(v));
+
+        // Animate card off screen and remove it
+        v.startAnimation(animSet);
     }
 
     /*
@@ -312,6 +361,32 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
         public void onAnimationStart(Animation animation) {}
         @Override
         public void onAnimationRepeat(Animation animation) {}
+    }
+
+    private View.OnClickListener decisionButtonListener(final float direction){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                View card = null;
+                for (int i = _root.getChildCount()-1; i >= 0; i--) {
+                    View curView = _root.getChildAt(i);
+//                    if (curView instanceof LinearLayout)
+                    if (curView != null && curView.getTag() != null && curView.getTag().toString().equals("card")) {
+                        card = curView;
+                        break;
+                    } else {
+                        Log.i("ViewName", "curView is null");
+                    }
+                }
+//                _root.getChildAt(_root.getChildCount());
+//                Log.i("ViewName",card.getClass().getName());
+
+                if (card != null) {
+                    animateCardOff(card, direction);
+                }
+            }
+        };
     }
 
     @Override
