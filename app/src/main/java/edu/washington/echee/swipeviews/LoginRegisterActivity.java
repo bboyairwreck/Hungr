@@ -19,6 +19,8 @@ public class LoginRegisterActivity extends Activity {
         FragmentTransaction ft = fm.beginTransaction();
         LoginFragment loginFragment = new LoginFragment();
 
+        ft.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left);
+
         ft.add(R.id.loginActivityRoot, loginFragment);
         ft.commit();
 
@@ -33,7 +35,7 @@ public class LoginRegisterActivity extends Activity {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         RegisterFragment fragment = new RegisterFragment();
-
+        ft.setCustomAnimations(R.animator.slide_in_right, R.animator.slide_out_left, R.animator.slide_in_left, R.animator.slide_out_right);
         ft.replace(R.id.loginActivityRoot, fragment);   // replace instead of add
         ft.addToBackStack("Register Fragment");
         ft.commit();

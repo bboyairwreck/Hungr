@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#DDDDDD"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true">
+
+    <ImageView
+        android:id="@+id/ivFoodImage"
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:scaleType="center"/>
+
+    <TextView
+        android:id="@+id/tvFoodTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/starPadding"
+        android:text="Steak"
+        android:background="#66000000"
+        android:textColor="@color/white"
+        android:textSize="@dimen/starSize"
+        android:layout_alignBottom="@id/ivFoodImage"
+
+        />
+    <RelativeLayout
+        android:id="@+id/rlPriceAndRatings"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/starPadding"
+        android:layout_below="@id/tvFoodTitle">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dollar_placeholder"
+            android:layout_alignParentLeft="true"
+            android:textSize="@dimen/starSize"
+            android:textColor="@color/black"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:layout_width="@dimen/starSize"
+                android:layout_height="@dimen/starSize"
+                android:src="@drawable/yellow_star_full"/>
+            <ImageView
+                android:layout_width="@dimen/starSize"
+                android:layout_height="@dimen/starSize"
+                android:src="@drawable/yellow_star_full"/>
+            <ImageView
+                android:layout_width="@dimen/starSize"
+                android:layout_height="@dimen/starSize"
+                android:src="@drawable/yellow_star_full"/>
+            <ImageView
+                android:layout_width="@dimen/starSize"
+                android:layout_height="@dimen/starSize"
+                android:src="@drawable/yellow_star_full"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

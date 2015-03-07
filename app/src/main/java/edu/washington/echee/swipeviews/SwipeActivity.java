@@ -4,12 +4,18 @@
  */
 package edu.washington.echee.swipeviews;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +24,13 @@ import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class SwipeActivity extends ActionBarActivity implements View.OnTouchListener {
     ViewGroup _root;                // root view
@@ -34,10 +39,12 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
     private float pivotX;           // rotation pivot X position
     private float pivotY;           // rotation pivot Y position
     private int numCards;
+    ImageView imageView;
+    Bitmap bitmap;
 
     public static final float MAX_ROTATION = 17f;   // max degrees to rotate card
-    public static final int MAX_CARDS = 10;         // max number of cards on screen at a time
-    public static final int MIN_CARDS = 3;         // min number of cards on screen at a time
+    public static final int MAX_CARDS = 5;         // max number of cards on screen at a time
+    public static final int MIN_CARDS = 2;         // min number of cards on screen at a time
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +84,49 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
      *      Must be done AFTER root view is loaded i.e. onWindowFocus() but NOT in onCreate()
      */
     public void addCards(int size) {
-        int cardMargin = 32;
+        int cardMargin = 67;
         int cardWidth = this.screenWidth - (cardMargin * 2);    // width of each card
-        int height = cardWidth;                       // height of each card
 
         // Create cards in add to root view
         for (int i = 0; i < size; i++) {
-            LinearLayout card = new LinearLayout(this);
+
+            LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            RelativeLayout card = (RelativeLayout) vi.inflate(R.layout.card_details, null);
+
+
+//            Bitmap food1Bitmap = drawableToBitmap(getResources().getDrawable(R.drawable.food1));
+//            food1Bitmap.recycle();
+//            imageView = (ImageView) card.findViewById(R.id.ivFoodImage);
+//
+//            imageView.setImageBitmap(food1Bitmap);
+//
+//            imageView.setLayoutParams(new RelativeLayout.LayoutParams(cardWidth, cardWidth));
+            imageView = (ImageView) card.findViewById(R.id.ivFoodImage);
+            imageView.setImageBitmap(
+                    decodeSampledBitmapFromResource(getResources(), R.drawable.food1, 100, 100));
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+
+
+//            imageView.setImageBitmap(bitmap); // Do whatever you need to do to load the image you want.
+            imageView.setLayoutParams(new RelativeLayout.LayoutParams(cardWidth, cardWidth));
+
+
+            TextView foodTitle = (TextView) card.findViewById(R.id.tvFoodTitle);
+            int titleHeight = foodTitle.getHeight();
+
+            RelativeLayout rlPriceAndRatings = (RelativeLayout) card.findViewById(R.id.rlPriceAndRatings);
+            int prHeight = rlPriceAndRatings.getHeight();
+
+            int starSize = ((int) getResources().getDimension(R.dimen.starSize));
+            int starPadding = ((int) getResources().getDimension(R.dimen.starPadding))*2;
+
+            int height = cardWidth + starSize + starPadding;
+
+            Log.i("SwipeActivity", "tileHeight + prHeight + height = " + titleHeight + " + " + prHeight + " + " + height);
+
+
+//            LinearLayout card = new LinearLayout(this);
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(cardWidth, height); // width & height
             layoutParams.leftMargin = cardMargin;
             layoutParams.topMargin = cardMargin;
@@ -107,6 +150,45 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
             _root.addView(card, 0, layoutParams);
             card.setOnTouchListener(this);
         }
+    }
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
+                                                         int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
     }
 
     /*
@@ -231,4 +313,12 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
         @Override
         public void onAnimationRepeat(Animation animation) {}
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        System.gc();
+        imageView.setImageBitmap(null);
+    }
+
 }
