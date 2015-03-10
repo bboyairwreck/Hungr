@@ -43,6 +43,9 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
     private int numCards;
     ImageView imageView;
     Bitmap bitmap;
+    ImageButton btnNope;
+    ImageButton btnYeah;
+    ImageButton btnInfo;
 
     public static final float MAX_ROTATION = 17f;   // max degrees to rotate card
     public static final int MAX_CARDS = 5;         // max number of cards on screen at a time
@@ -58,9 +61,9 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
         // Get Root container
         _root = (ViewGroup) findViewById(R.id.root);
 
-        ImageButton btnNope = (ImageButton) findViewById(R.id.btnNope);
-        ImageButton btnYeah = (ImageButton) findViewById(R.id.btnYeah);
-        ImageButton btnInfo = (ImageButton) findViewById(R.id.btnInfo);
+        btnNope = (ImageButton) findViewById(R.id.btnNope);
+        btnYeah = (ImageButton) findViewById(R.id.btnYeah);
+        btnInfo = (ImageButton) findViewById(R.id.btnInfo);
 
         btnNope.setImageBitmap(
                 decodeSampledBitmapFromResource(getResources(), R.drawable.nope, 100, 100));
@@ -94,10 +97,6 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
         this.screenWidth = _root.getWidth();
         addCards(MAX_CARDS);
 
-        ImageButton btnNope = (ImageButton) findViewById(R.id.btnNope);
-        ImageButton btnYeah = (ImageButton) findViewById(R.id.btnYeah);
-        ImageButton btnInfo = (ImageButton) findViewById(R.id.btnInfo);
-
         btnNope.setOnClickListener(decisionButtonListener(GO_LEFT));
         btnYeah.setOnClickListener(decisionButtonListener(GO_RIGHT));
     }
@@ -117,14 +116,6 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
             LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             RelativeLayout card = (RelativeLayout) vi.inflate(R.layout.card_details, null);
 
-
-//            Bitmap food1Bitmap = drawableToBitmap(getResources().getDrawable(R.drawable.food1));
-//            food1Bitmap.recycle();
-//            imageView = (ImageView) card.findViewById(R.id.ivFoodImage);
-//
-//            imageView.setImageBitmap(food1Bitmap);
-//
-//            imageView.setLayoutParams(new RelativeLayout.LayoutParams(cardWidth, cardWidth));
             imageView = (ImageView) card.findViewById(R.id.ivFoodImage);
             imageView.setImageBitmap(
                     decodeSampledBitmapFromResource(getResources(), R.drawable.food1, 100, 100));
@@ -257,28 +248,7 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
 
                 // Animate card off screen if did reach swipe threshold
                 } else {
-//                    int animDuration = 600;
-//                    float sign = 1;
-//                    if (v.getRotation() < 0) {
-//                        sign = -1;
-//                    }
-//                    RotateAnimation rotateAnim = new RotateAnimation(0, MAX_ROTATION*sign, pivotX, pivotY);
-//                    rotateAnim.setDuration(animDuration);
-//                    rotateAnim.setRepeatCount(0);
-//
-//                    TranslateAnimation translateAnim = new TranslateAnimation(0, (this.screenWidth)*sign, 0, 0);
-//                    translateAnim.setDuration(animDuration);
-//                    translateAnim.setRepeatCount(0);
-//
-//                    AnimationSet animSet = new AnimationSet(true);
-//                    animSet.addAnimation(rotateAnim);
-//                    animSet.addAnimation(translateAnim);
-//                    animSet.setFillAfter(true);
-//                    animSet.setAnimationListener(new MyAnimationListener(v));
-//
-//                    // Animate card off screen and remove it
-//                    v.startAnimation(animSet);
-                    animateCardOff(v , v.getRotation());
+                    animateCardOff(v , v.getRotation(), 600);
                 }
 
                 Log.i("OnTouch", "Touch Released");
@@ -289,8 +259,7 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
         return true;
     }
 
-    private void animateCardOff(View v, float rotation){
-        int animDuration = 600;
+    private void animateCardOff(View v, float rotation, int animDuration){
         float sign = 1;
         if (rotation < 0) {
             sign = -1;
@@ -341,6 +310,9 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
                             _root.removeView(v);        // removes card from root view
                             Log.i("onAnimationEnd", "Card removed");
 
+                            btnNope.setEnabled(true);
+                            btnYeah.setEnabled(true);
+
                             SwipeActivity.this.numCards--; // decrement number of cards
 
                             // If down to MIN_CARDS, add more cards
@@ -358,7 +330,10 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
         }
 
         @Override
-        public void onAnimationStart(Animation animation) {}
+        public void onAnimationStart(Animation animation) {
+            btnNope.setEnabled(false);
+            btnYeah.setEnabled(false);
+        }
         @Override
         public void onAnimationRepeat(Animation animation) {}
     }
@@ -375,15 +350,13 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
                     if (curView != null && curView.getTag() != null && curView.getTag().toString().equals("card")) {
                         card = curView;
                         break;
-                    } else {
-                        Log.i("ViewName", "curView is null");
                     }
                 }
 //                _root.getChildAt(_root.getChildCount());
 //                Log.i("ViewName",card.getClass().getName());
 
                 if (card != null) {
-                    animateCardOff(card, direction);
+                    animateCardOff(card, direction, 400);
                 }
             }
         };
