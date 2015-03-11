@@ -3,7 +3,7 @@
 		{
 			"title":"Hot Dog",
 			"desc":"The thing you eat at baseball games",
-			"img":"hotdog"
+			"img":"hotdog",
 			"restaurants": [
 				"Schultzy's Sausage",
 				"Po Dog",
@@ -13,7 +13,7 @@
 		{
 			"title":"Pho",
 			"desc":"Vietnamese soup",
-			"img":"pho"
+			"img":"pho",
 			"restaurants": [
 				"Pho Than Brothers",
 				"Lucky's Pho",
@@ -23,7 +23,7 @@
 		{
 			"title":"CheeseSteak",
 			"desc":"Cheesy Steak...Duh",
-			"img":"cheesesteak"
+			"img":"cheesesteak",
 			"restaurants": [
 				"Shultzy's Sausage",
 				"Calozzi's Cheesesteaks",
@@ -34,7 +34,7 @@
 		{
 			"title":"Burrito",
 			"desc":"Wraps that are the size of a small child",
-			"img":"burrito"
+			"img":"burrito",
 			"restaurants": [
 				"Chipotle",
 				"Gorditos"
@@ -43,7 +43,7 @@
 		{
 			"title":"Pancakes",
 			"desc":"Cakes from a fan",
-			"img":"pancakes"
+			"img":"pancakes",
 			"restaurants": [
 				"Portage Bay",
 				"Dish",
@@ -53,7 +53,7 @@
 		{
 			"title":"Eggs",
 			"desc":"The eggs of a chicken...but cooked",
-			"img":"eggs"
+			"img":"eggs",
 			"restaurants": [
 				"Portage Bay",
 				"Dish",
@@ -63,7 +63,7 @@
 		{
 			"title":"BLT",
 			"desc":"Bacon, Lettuce, and Toes",
-			"img":"hotdog"
+			"img":"hotdog",
 			"restaurants": [
 				"HoneyHole",
 				"The Swinery",
@@ -73,7 +73,7 @@
 		{
 			"title":"Chicken Sandwich",
 			"desc":"Sandwich made of the things that come from eggs",
-			"img":"hotdog"
+			"img":"hotdog",
 			"restaurants": [
 				"HoneyHole",
 				"Potbelly Sandwich Shop",
@@ -195,7 +195,7 @@
 		},
 		{
 			"title":"The Ugly Mug Cafe",
-			"desc":"Don't judge a mug by its handle"
+			"desc":"Don't judge a mug by its handle",
 			"price":"2",
 			"rating":"4",
 			"img":"ugly_mug_cafe"

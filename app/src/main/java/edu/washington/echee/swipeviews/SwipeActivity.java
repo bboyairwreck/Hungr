@@ -61,6 +61,14 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
         // Get Root container
         _root = (ViewGroup) findViewById(R.id.root);
 
+        //TODO Testcode to show list of foods
+        HungrApp hungrApp = (HungrApp) getApplicationContext();
+
+        for(Food f : hungrApp.getFoods()) {
+            Log.i(f.title, f.desc);
+        }
+        // TODO End of testcode
+
         btnNope = (ImageButton) findViewById(R.id.btnNope);
         btnYeah = (ImageButton) findViewById(R.id.btnYeah);
         btnInfo = (ImageButton) findViewById(R.id.btnInfo);
