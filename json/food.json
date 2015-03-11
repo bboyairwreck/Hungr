@@ -1,0 +1,82 @@
+[
+	{
+		"title":"Hot Dog",
+		"desc":"The thing you eat at baseball games",
+		"img":"hotdog"
+		"restaurants": [
+			"Schultzy's Sausage",
+			"Po Dog",
+			"Diggity Dog"
+		]
+	},
+	{
+		"title":"Pho",
+		"desc":"Vietnamese soup",
+		"img":"pho"
+		"restaurants": [
+			"Pho Than Brothers",
+			"Lucky's Pho",
+			"Pho Cyclo Cafe"
+		]
+	},
+	{
+		"title":"CheeseSteak",
+		"desc":"Cheesy Steak...Duh",
+		"img":"cheesesteak"
+		"restaurants": [
+			"Shultzy's Sausage",
+			"Calozzi's Cheesesteaks",
+			"The Original Philly's",
+			"Philly Boys Cheesesteaks"
+		]
+	},
+	{
+		"title":"Burrito",
+		"desc":"Wraps that are the size of a small child",
+		"img":"burrito"
+		"restaurants": [
+			"Chipotle",
+			"Gorditos"
+	ß	},
+	{
+		"title":"Pancakes",
+		"desc":"Cakes from a fan",
+		"img":"pancakes"
+		"restaurants": [
+			"Portage Bay",
+			"Dish",
+			"Americana"
+		]
+	},
+	{
+		"title":"Eggs",
+		"desc":"The eggs of a chicken...but cooked",
+		"img":"eggs"
+		"restaurants": [
+			"Portage Bay",
+			"Dish",
+			"Americana"
+		]
+	},
+	{
+		"title":"BLT",
+		"desc":"Bacon, Lettuce, and Toes",
+		"img":"hotdog"
+		"restaurants": [
+			"HoneyHole",
+			"The Swinery",
+			"Ugly Mug Cafe"
+		]
+	},
+	{
+		"title":"Chicken Sandwich",
+		"desc":"Sandwich made of the things that come from eggs",
+		"img":"hotdog"
+		"restaurants": [
+			"HoneyHole",
+			"Potbelly Sandwich Shop",
+			"The Swinery",
+			"Ugly Mug Cafe"
+		]
+	}
+]
