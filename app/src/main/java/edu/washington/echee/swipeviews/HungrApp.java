@@ -15,8 +15,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * Created by eric on 3/10/15.
@@ -25,7 +27,7 @@ public class HungrApp extends Application {
     private static HungrApp instance; // singleton
     private ArrayList<Food> foods;
     private HashMap<String, Restaurant> restaurants;
-    public Queue<Restaurant> likedRestaurants;
+    public Set<Restaurant> likedRestaurants;
 
 
     public HungrApp() {
@@ -46,7 +48,7 @@ public class HungrApp extends Application {
 
         Log.i("HungrApp", "The Hungr app is loaded and running");
 
-        this.likedRestaurants = new LinkedList<Restaurant>();
+        this.likedRestaurants = new HashSet<Restaurant>();
         this.foods = new ArrayList<Food>();
         this.restaurants = new HashMap<String, Restaurant>();
 
@@ -71,14 +73,18 @@ public class HungrApp extends Application {
 
             JSONObject jsonData = new JSONObject(json);
 
+            // Add the all the foods to respository
             JSONArray jsonFoods = jsonData.getJSONArray("foods");
-
             for (int i = 0; i <jsonFoods.length(); i++) {
                 JSONObject jsonFood = jsonFoods.getJSONObject(i);
                 addFood(jsonFood);
             }
 
             JSONArray jsonRestaurants = jsonData.getJSONArray("restaurants");
+            for (int i = 0; i < jsonRestaurants.length(); i++) {
+                JSONObject jsonRestaurant = jsonRestaurants.getJSONObject(i);
+                addRestaurant(jsonRestaurant);
+            }
 
             Log.i("HungrApp JSON", json);   // TODO delete this. Prints out the raw JSON used
 
@@ -118,6 +124,18 @@ public class HungrApp extends Application {
         this.foods.add(food);
     }
 
+
+    private void addRestaurant(JSONObject jsonRestaurant) throws JSONException{
+        String title = jsonRestaurant.getString("title");
+        String desc = jsonRestaurant.getString("desc");
+        String imgName = jsonRestaurant.getString("img");
+        int price = jsonRestaurant.getInt("price");
+        int rating = jsonRestaurant.getInt("rating");
+
+        Restaurant restaurant = new Restaurant(title, desc, imgName, price, rating);
+        this.restaurants.put(title, restaurant);
+    }
+
     @Override
     public void onTerminate() {
         super.onTerminate();
@@ -137,6 +155,26 @@ public class HungrApp extends Application {
 
     public ArrayList<Food> getFoods(){
         return this.foods;
+    }
+
+    public HashMap<String, Restaurant> getRestaurants() {
+        return this.restaurants;
+    }
+
+    public Set<Restaurant> getLikedRestaurants() {
+        return this.likedRestaurants;
+    }
+
+    /**
+     * Add all restaurants that have this food to your liked list
+     * @param food a Food object that contains a list of restaurants to add to the liked
+     */
+    public void addRestaurantsToLiked(Food food) {
+
+        for (int i = 0; i < food.restaurants.size(); i++) {
+            Restaurant curRestaurant = this.restaurants.get(food.restaurants.get(i));
+            this.likedRestaurants.add(curRestaurant);
+        }
     }
 
     // reads InputStream of JSON file and returns the file in JSON String format

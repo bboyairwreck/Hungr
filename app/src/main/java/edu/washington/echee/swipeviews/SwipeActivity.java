@@ -33,6 +33,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class SwipeActivity extends ActionBarActivity implements View.OnTouchListener {
     ViewGroup _root;                // root view
@@ -61,24 +62,17 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
         // Get Root container
         _root = (ViewGroup) findViewById(R.id.root);
 
-        //TODO Testcode to show list of foods
-        HungrApp hungrApp = (HungrApp) getApplicationContext();
-
-        for(Food f : hungrApp.getFoods()) {
-            Log.i(f.title, f.desc);
-        }
-        // TODO End of testcode
-
+        int buttonSize = 100;
         btnNope = (ImageButton) findViewById(R.id.btnNope);
         btnYeah = (ImageButton) findViewById(R.id.btnYeah);
-        btnInfo = (ImageButton) findViewById(R.id.btnInfo);
+        //btnInfo = (ImageButton) findViewById(R.id.btnInfo);
 
         btnNope.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.nope, 100, 100));
+                decodeSampledBitmapFromResource(getResources(), R.drawable.nope, buttonSize, buttonSize));
         btnYeah.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.yeah, 100, 100));
-        btnInfo.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.info, 100, 100));
+                decodeSampledBitmapFromResource(getResources(), R.drawable.yeah, buttonSize, buttonSize));
+        //btnInfo.setImageBitmap(
+        //        decodeSampledBitmapFromResource(getResources(), R.drawable.info, buttonSize, buttonSize));
 
 
         this.numCards = MAX_CARDS;
@@ -271,6 +265,11 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
         float sign = 1;
         if (rotation < 0) {
             sign = -1;
+        } else {
+            // TODO
+//            HungrApp hungrApp = (HungrApp) getApplicationContext();
+//            getFood;
+//            hungrApp.addRestaurantsToLiked(food);
         }
         RotateAnimation rotateAnim = new RotateAnimation(0, MAX_ROTATION*sign, pivotX, pivotY);
         rotateAnim.setDuration(animDuration);
@@ -375,6 +374,9 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
         super.onDestroy();
         System.gc();
         imageView.setImageBitmap(null);
+        btnNope.setImageBitmap(null);
+        btnYeah.setImageBitmap(null);
+        //btnInfo.setImageBitmap(null);
     }
 
 }
