@@ -63,7 +63,7 @@
 		{
 			"title":"BLT",
 			"desc":"Bacon, Lettuce, and Toes",
-			"img":"hotdog",
+			"img":"blt",
 			"restaurants": [
 				"HoneyHole",
 				"The Swinery",
@@ -73,12 +73,22 @@
 		{
 			"title":"Chicken Sandwich",
 			"desc":"Sandwich made of the things that come from eggs",
-			"img":"hotdog",
+			"img":"chicken_sandwich",
 			"restaurants": [
 				"HoneyHole",
 				"Potbelly Sandwich Shop",
 				"The Swinery",
 				"Ugly Mug Cafe"
+			]
+		},
+		{
+			"title":"Steak",
+			"desc":"The butt of a cow",
+			"img":"steak",
+			"restaurants": [
+				"Chipotle",
+				"Portage Bay",
+				"The Swinery"
 			]
 		}
 	],
