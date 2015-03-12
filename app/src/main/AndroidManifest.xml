@@ -23,6 +23,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RestaurantList"
+            android:label="Hungr"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".RestaurantDetails"
+            android:label="Hungr"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
