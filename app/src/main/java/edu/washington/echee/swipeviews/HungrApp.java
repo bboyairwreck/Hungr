@@ -136,11 +136,34 @@ public class HungrApp extends Application {
         this.restaurants.put(title, restaurant);
     }
 
+    /**
+     * Add all restaurants that have this food to your liked list
+     * @param food a Food object that contains a list of restaurants to add to the liked
+     */
+    public void addRestaurantsToLiked(Food food) {
+
+        for (int i = 0; i < food.restaurants.size(); i++)
+        {
+            String restaurantKey = food.restaurants.get(i);
+            Restaurant curRestaurant = this.restaurants.get(restaurantKey);
+
+            if (curRestaurant == null) {
+                Log.i("HungrApp", "Couldn't add to restaurant. .get(" + restaurantKey+ ") is null. might want to check in JSON");
+            } else {
+                Log.i("HungrApp", "Adding " + curRestaurant.title + " to the Liked set");
+
+                this.likedRestaurants.add(curRestaurant);
+            }
+
+
+        }
+    }
+
+
     @Override
     public void onTerminate() {
         super.onTerminate();
     }
-
 
     // reads InputStream of JSON file and returns the file in JSON String format
     public String readJSONFile(InputStream inputStream) throws IOException {
@@ -163,18 +186,6 @@ public class HungrApp extends Application {
 
     public Set<Restaurant> getLikedRestaurants() {
         return this.likedRestaurants;
-    }
-
-    /**
-     * Add all restaurants that have this food to your liked list
-     * @param food a Food object that contains a list of restaurants to add to the liked
-     */
-    public void addRestaurantsToLiked(Food food) {
-
-        for (int i = 0; i < food.restaurants.size(); i++) {
-            Restaurant curRestaurant = this.restaurants.get(food.restaurants.get(i));
-            this.likedRestaurants.add(curRestaurant);
-        }
     }
 
     // reads InputStream of JSON file and returns the file in JSON String format
