@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class SwipeActivity extends ActionBarActivity implements View.OnTouchListener {
+public class SwipeActivity extends HungrBaseActivity implements View.OnTouchListener {
     ViewGroup _root;                // root view
     HungrApp hungrApp;
     private int _xDelta;            // distance card dragged in X-axis
@@ -94,16 +95,17 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
 
         this.numCards = MAX_CARDS;
 
-        String[] stringArr = getResources().getStringArray(R.array.nav_drawer_list);
-        ArrayList<String> navDrawerList = new ArrayList<String>(Arrays.asList(stringArr)); //Create nav_drawer elements list
-        ListView lvNavDrawer = (ListView) findViewById(R.id.lvNavDrawer);
-        lvNavDrawer.setAdapter(new NavDrawerListAdapter(this, R.layout.nav_drawer_list_layout, navDrawerList));
-        lvNavDrawer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
+//        String[] stringArr = getResources().getStringArray(R.array.nav_drawer_list);
+//        ArrayList<String> navDrawerList = new ArrayList<String>(Arrays.asList(stringArr)); //Create nav_drawer elements list
+//        ListView lvNavDrawer = (ListView) findViewById(R.id.lvNavDrawer);
+//        lvNavDrawer.setAdapter(new NavDrawerListAdapter(this, R.layout.nav_drawer_list_layout, navDrawerList));
+//        lvNavDrawer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//            }
+//        });
+        createNavDrawer(this);
 
         ImageButton btnResults = (ImageButton) findViewById(R.id.ibResults);
         btnResults.setOnClickListener(new View.OnClickListener() {
@@ -464,5 +466,18 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
         //btnInfo.setImageBitmap(null);
         btnNoMoreFood.setImageBitmap(null);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+
+        if (super.onNavDrawerButtonPress(item)) { //Required to activate drawer
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
 }

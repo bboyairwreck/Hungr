@@ -1,4 +1,5 @@
 <android.support.v4.widget.DrawerLayout
+    android:id="@+id/dlDrawerLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity"
@@ -15,8 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
-
-
 
     </RelativeLayout>
     <RelativeLayout

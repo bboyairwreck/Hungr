@@ -23,10 +23,12 @@
 
 
     <string-array name="nav_drawer_list">
-        <item>How</item>
-        <item>You</item>
-        <item>Doing</item>
-        <item>Baby</item>
+        <item>Home</item>
+        <item>Settings</item>
+        <item>About</item>
     </string-array>
+    <string name="drawer_open">open drawer</string>
+    <string name="drawer_close">close drawer</string>
+
 
 </resources>
