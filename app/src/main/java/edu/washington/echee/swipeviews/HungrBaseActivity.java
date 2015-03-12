@@ -3,6 +3,7 @@ package edu.washington.echee.swipeviews;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -21,14 +22,25 @@ import java.util.Arrays;
 /**
  * Created by Steven on 3/11/15.
  */
+
+/*
+To get drawer on an activity simply make that activity extend this one and add:
+
+if (super.onNavDrawerButtonPress(item)) { //Required to activate drawer
+    return true;
+}
+
+To the onOptionsItemSelected function
+ */
 public class HungrBaseActivity extends ActionBarActivity {
+    private Context ctx;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private CharSequence mTitle;
     private CharSequence mDrawerTitle;
 
     public void createNavDrawer(Context context) {
-
+        ctx = context;
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.dlDrawerLayout);
         mDrawerToggle = navToggle((Activity) context);
@@ -46,7 +58,13 @@ public class HungrBaseActivity extends ActionBarActivity {
         lvNavDrawer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                switch (position) {
+                    case 0: openHome(); //Open Home
+                        break;
+                    case 1: openSettings(); //Open settings
+                        break;
+                    case 2: openAbout(); //Open About
+                }
             }
         });
 
@@ -98,5 +116,20 @@ public class HungrBaseActivity extends ActionBarActivity {
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(GravityCompat.START);
         //menu.findItem(R.id.action_websearch).setVisible(!drawerOpen); //Hides/Shows item
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void openHome() {
+        Intent swipeActivityIntent = new Intent(ctx, SwipeActivity.class);
+        startActivity(swipeActivityIntent);
+    }
+
+    private void openSettings() {
+        Intent swipeActivityIntent = new Intent(ctx, SettingsActivity.class);
+        startActivity(swipeActivityIntent);
+    }
+
+    private void openAbout() {
+        Intent swipeActivityIntent = new Intent(ctx, AboutActivity.class);
+        startActivity(swipeActivityIntent);
     }
 }
