@@ -3,6 +3,7 @@ package edu.washington.echee.swipeviews;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,5 +49,19 @@ public class LoginRegisterActivity extends Activity {
 
         // TODO enable finish after testing so cannot return to sign-in/registration
         // finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // Check if alarm has already been created
+        Intent alarmIntent = new Intent(this, AlarmReceiver.class);
+        boolean alarmUP = (PendingIntent.getBroadcast(this, Constants.MY_ALARM, alarmIntent,
+                PendingIntent.FLAG_NO_CREATE) != null);
+
+        if (alarmUP) {
+            DownloadService.startOrStopAlarm(this, false);
+        }
     }
 }

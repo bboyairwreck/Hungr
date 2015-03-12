@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -276,5 +277,22 @@ public class HungrBaseActivity extends ActionBarActivity {
                 Log.i("HungrBaseActivity", "clicked Cancel. Not retrying to download.");
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // Check if alarm has already been created
+        Intent alarmIntent = new Intent(this, AlarmReceiver.class);
+        boolean alarmUP = (PendingIntent.getBroadcast(this, Constants.MY_ALARM, alarmIntent,
+                PendingIntent.FLAG_NO_CREATE) != null);
+
+        if (alarmUP) {
+            DownloadService.startOrStopAlarm(this, false);
+        }
+
+        Log.i("HungrBaseActivity", "unregistering receiver");
+        unregisterReceiver(receiver);
     }
 }
