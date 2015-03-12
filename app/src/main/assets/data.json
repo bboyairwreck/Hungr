@@ -229,7 +229,7 @@
 		{
 			"title":"Ted's House",
 			"desc":"Food, Magic, and ponytails. This is the place!",
-			"price":"$",
+			"price":"1",
 			"rating":"5",
 			"img":"teds_house"
 		}
