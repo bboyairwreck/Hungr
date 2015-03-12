@@ -33,6 +33,9 @@
 
     <!--About page-->
     <string name="title_activity_about">About</string>
+    <string name="steven">Steven Raden</string>
+    <string name="eric">Eric Chee</string>
+    <string name="mike">Mike Slagle</string>
     <string name="about_paragraph">Hello. We are team Hungr. We care about your Hunger and the fact that you need to eat.</string>
 
 
