@@ -30,7 +30,7 @@ public class DownloadService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.i("DownloadService", "entered onHandleIntent()");
 
-        String url = "http://ericchee.com/hungr/data.json";
+        String url = Constants.JSON_URL;
 
         if (HungrApp.haveNetworkConnection(this)) {
             Log.i("DownloadService", "should be downloading here");
@@ -52,7 +52,8 @@ public class DownloadService extends IntentService {
         AlarmManager manager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
         if (on) {
-            int refreshInterval = 2 * 6000;   // TODO CHANGE BACK TO 60000
+
+            int refreshInterval = Constants.DOWNLOAD_INTERVAL_MIN * 60000;
 
             Log.i("DownloadService", "setting alarm to " + refreshInterval);
 

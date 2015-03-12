@@ -18,17 +18,16 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i("AlarmReceiver", "entered onReceive()");
+        Log.i("AlarmReceiver", "Alarm has looped. entered onReceive().");
 
         showToast(context);
 
         Intent downloadServiceIntent = new Intent(context, DownloadService.class);
         context.startService(downloadServiceIntent);
-
     }
 
     private void showToast(Context context){
-        String url = "http://ericchee.com/hungr/data.json";
+        String url = Constants.JSON_URL;
 
         String toastMessage = "Checking updates from \"" + url + "\"";
         Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show();

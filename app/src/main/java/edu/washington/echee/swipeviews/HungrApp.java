@@ -101,7 +101,7 @@ public class HungrApp extends Application {
             e.printStackTrace();
         }
 
-
+        DownloadService.startOrStopAlarm(this, true);
     }
 
     /**
