@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,15 +32,15 @@ public class NavDrawerListAdapter extends ArrayAdapter<String> {
         TextView topicTitle = (TextView) contextView.findViewById(R.id.tvNavName);
         topicTitle.setText(getItem(position));
 
-        //Get some layout here
+        ImageView ivListItem = (ImageView) contextView.findViewById(R.id.ivNavIcon);
         switch(position) {
-            case 0:
+            case 0: ivListItem.setImageResource(R.drawable.ic_menu_home);
                 break;
-            case 1:
+            case 1: ivListItem.setImageResource(R.drawable.ic_action_settings);
                 break;
-            case 2:
+            case 2: ivListItem.setImageResource(R.drawable.ic_action_about);
                 break;
-            case 3:
+            default: ivListItem.setImageResource(R.drawable.ic_action_copy);
                 break;
         }
 
