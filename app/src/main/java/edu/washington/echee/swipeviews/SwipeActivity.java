@@ -160,7 +160,7 @@ public class SwipeActivity extends HungrBaseActivity implements View.OnTouchList
 
                 imageView = (ImageView) card.findViewById(R.id.ivFoodImage);
                 imageView.setImageBitmap(
-                        decodeSampledBitmapFromResource(getResources(), R.drawable.food1, 100, 100));
+                        decodeSampledBitmapFromResource(getResources(), R.drawable.steak, 100, 100));
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
 
