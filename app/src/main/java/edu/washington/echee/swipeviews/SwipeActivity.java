@@ -114,7 +114,6 @@ public class SwipeActivity extends HungrBaseActivity implements View.OnTouchList
                 showRestaurantList();
             }
         });
-
     }
 
     /*
@@ -478,6 +477,5 @@ public class SwipeActivity extends HungrBaseActivity implements View.OnTouchList
 
         return super.onOptionsItemSelected(item);
     }
-
 
 }
