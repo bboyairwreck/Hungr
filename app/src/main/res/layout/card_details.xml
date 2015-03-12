@@ -32,6 +32,7 @@
         android:padding="@dimen/starPadding"
         android:layout_below="@id/tvFoodTitle">
         <TextView
+            android:id="@+id/tvPriceLevel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dollar_placeholder"

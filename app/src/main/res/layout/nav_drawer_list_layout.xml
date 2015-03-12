@@ -10,7 +10,7 @@
         android:layout_height="30dp"
         android:layout_marginRight="16dp"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/ic_hungr" />
+        android:src="@drawable/ic_hungr"/>
 
 
     <TextView android:id="@+id/tvNavName"

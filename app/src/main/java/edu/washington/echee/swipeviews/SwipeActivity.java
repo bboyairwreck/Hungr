@@ -34,33 +34,49 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class SwipeActivity extends ActionBarActivity implements View.OnTouchListener {
     ViewGroup _root;                // root view
+    HungrApp hungrApp;
     private int _xDelta;            // distance card dragged in X-axis
     private int screenWidth = 0;    // width of rootView
+    private int screenHeight = 0;
     private float pivotX;           // rotation pivot X position
     private float pivotY;           // rotation pivot Y position
     private int numCards;
+    private ArrayList<Food> foods;
+    private int curFoodIndex;
+    public static final float MAX_ROTATION = 17f;   // max degrees to rotate card
+    Queue<Integer> foodIDOrder;
     ImageView imageView;
     Bitmap bitmap;
     ImageButton btnNope;
     ImageButton btnYeah;
     ImageButton btnInfo;
+    ImageButton btnNoMoreFood;
 
-    public static final float MAX_ROTATION = 17f;   // max degrees to rotate card
     public static final int MAX_CARDS = 5;         // max number of cards on screen at a time
     public static final int MIN_CARDS = 2;         // min number of cards on screen at a time
     public static final float GO_LEFT = -1000f;   // max degrees to rotate card
     public static final float GO_RIGHT = 1000f;   // max degrees to rotate card
+    public static final int cardMargin = 67;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        this.hungrApp = (HungrApp)getApplicationContext();
+
         // Get Root container
         _root = (ViewGroup) findViewById(R.id.root);
+
+        this.foods = hungrApp.getFoods();
+        this.curFoodIndex = 0;
+        this.foodIDOrder = new LinkedList<Integer>();
+
 
         int buttonSize = 100;
         btnNope = (ImageButton) findViewById(R.id.btnNope);
@@ -96,7 +112,9 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
      */
     @Override
     public void onWindowFocusChanged(boolean b) {
+        this.screenHeight = ((ViewGroup) findViewById(R.id.fullscreen)).getHeight();
         this.screenWidth = _root.getWidth();
+        addNoMoreFoodButton();
         addCards(MAX_CARDS);
 
         btnNope.setOnClickListener(decisionButtonListener(GO_LEFT));
@@ -109,64 +127,108 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
      *      Must be done AFTER root view is loaded i.e. onWindowFocus() but NOT in onCreate()
      */
     public void addCards(int size) {
-        int cardMargin = 67;
         int cardWidth = this.screenWidth - (cardMargin * 2);    // width of each card
+        int leftMargin = cardMargin;
+
+        int bottomButtonsHeight = (int) getResources().getDimension(R.dimen.yeahNope_plus_results);
+        int maxWidth = screenHeight - (bottomButtonsHeight + cardMargin);
+        if (cardWidth > maxWidth) {
+            cardWidth = maxWidth;
+            leftMargin = (screenWidth - cardWidth) / 2;
+        }
+
 
         // Create cards in add to root view
         for (int i = 0; i < size; i++) {
+            if (curFoodIndex < foods.size()) {
+                // Get a Food from the repository and add it to the queue
+                Food food = foods.get(curFoodIndex);
+                this.foodIDOrder.add(curFoodIndex);
 
-            LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            RelativeLayout card = (RelativeLayout) vi.inflate(R.layout.card_details, null);
+                LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                RelativeLayout card = (RelativeLayout) vi.inflate(R.layout.card_details, null);
 
-            imageView = (ImageView) card.findViewById(R.id.ivFoodImage);
-            imageView.setImageBitmap(
-                    decodeSampledBitmapFromResource(getResources(), R.drawable.food1, 100, 100));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
+                imageView = (ImageView) card.findViewById(R.id.ivFoodImage);
+                imageView.setImageBitmap(
+                        decodeSampledBitmapFromResource(getResources(), R.drawable.food1, 100, 100));
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
 
 //            imageView.setImageBitmap(bitmap); // Do whatever you need to do to load the image you want.
-            imageView.setLayoutParams(new RelativeLayout.LayoutParams(cardWidth, cardWidth));
+                imageView.setLayoutParams(new RelativeLayout.LayoutParams(cardWidth, cardWidth));
 
 
-            TextView foodTitle = (TextView) card.findViewById(R.id.tvFoodTitle);
-            int titleHeight = foodTitle.getHeight();
+                TextView foodTitle = (TextView) card.findViewById(R.id.tvFoodTitle);
+                foodTitle.setText(food.title);
+                int titleHeight = foodTitle.getHeight();
 
-            RelativeLayout rlPriceAndRatings = (RelativeLayout) card.findViewById(R.id.rlPriceAndRatings);
-            int prHeight = rlPriceAndRatings.getHeight();
+                TextView tvPriceLevel = (TextView) card.findViewById(R.id.tvPriceLevel);
+                tvPriceLevel.setText(food.getPriceLevelString());
 
-            int starSize = ((int) getResources().getDimension(R.dimen.starSize));
-            int starPadding = ((int) getResources().getDimension(R.dimen.starPadding))*2;
 
-            int height = cardWidth + starSize + starPadding;
+                RelativeLayout rlPriceAndRatings = (RelativeLayout) card.findViewById(R.id.rlPriceAndRatings);
+                int prHeight = rlPriceAndRatings.getHeight();
 
-            Log.i("SwipeActivity", "tileHeight + prHeight + height = " + titleHeight + " + " + prHeight + " + " + height);
+                int starSize = ((int) getResources().getDimension(R.dimen.starSize));
+                int starPadding = ((int) getResources().getDimension(R.dimen.starPadding)) * 2;
+
+                int height = cardWidth + starSize + starPadding;
+
+                Log.i("SwipeActivity", "tileHeight + prHeight + height = " + titleHeight + " + " + prHeight + " + " + height);
 
 
 //            LinearLayout card = new LinearLayout(this);
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(cardWidth, height); // width & height
-            layoutParams.leftMargin = cardMargin;
-            layoutParams.topMargin = cardMargin;
-            card.setLayoutParams(layoutParams);
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(cardWidth, height); // width & height
+                layoutParams.leftMargin = leftMargin;
+                layoutParams.topMargin = cardMargin;
+                card.setLayoutParams(layoutParams);
 
-            // TODO Delete. Each card alternates between Green & RED
-            card.setBackgroundColor(Color.RED);
-            if (i%2==0) {
-                card.setBackgroundColor(Color.GREEN);
+                // TODO Delete. Each card alternates between Green & RED
+                card.setBackgroundColor(Color.RED);
+                if (i % 2 == 0) {
+                    card.setBackgroundColor(Color.GREEN);
+                }
+                // TODO DELETE ^
+
+                this.pivotX = cardWidth / 2;    // set x pivot point center
+                this.pivotY = height * 2f;      // set y pivot point 2x below the height
+
+                // set pivot location to bottom center
+                card.setPivotX(pivotX);
+                card.setPivotY(pivotY);
+
+                // Add card to root view & set onTouchListener
+                _root.addView(card, 1, layoutParams);       // NOTE: added it to index 1 cuz no_more_food is 0th child
+                card.setOnTouchListener(this);
+
+                curFoodIndex++;
+            } else {
+                break;
             }
-            // TODO DELETE ^
-
-            this.pivotX = cardWidth / 2;    // set x pivot point center
-            this.pivotY = height * 2f;      // set y pivot point 2x below the height
-
-            // set pivot location to bottom center
-            card.setPivotX(pivotX);
-            card.setPivotY(pivotY);
-
-            // Add card to root view & set onTouchListener
-            _root.addView(card, 0, layoutParams);
-            card.setOnTouchListener(this);
         }
+    }
+
+    private void addNoMoreFoodButton(){
+        int cardWidth = this.screenWidth - (cardMargin * 2);    // width of each card
+        int leftMargin = cardMargin;
+
+        int bottomButtonsHeight = (int) getResources().getDimension(R.dimen.yeahNope_plus_results);
+        int maxWidth = screenHeight - (bottomButtonsHeight + cardMargin);
+        if (cardWidth > maxWidth) {
+            cardWidth = maxWidth;
+            leftMargin = (screenWidth - cardWidth) / 2;
+        }
+
+        btnNoMoreFood = new ImageButton(this);
+        btnNoMoreFood.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.no_more_food, 100, 100));
+        btnNoMoreFood.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(cardWidth, cardWidth); // width & height
+        layoutParams.leftMargin = leftMargin;
+        layoutParams.topMargin = cardMargin;
+        btnNoMoreFood.setLayoutParams(layoutParams);
+        _root.addView(btnNoMoreFood, 0, layoutParams);
     }
 
     public static int calculateInSampleSize(
@@ -262,14 +324,15 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
     }
 
     private void animateCardOff(View v, float rotation, int animDuration){
+        int foodID = foodIDOrder.remove();
+
         float sign = 1;
         if (rotation < 0) {
             sign = -1;
         } else {
-            // TODO
-//            HungrApp hungrApp = (HungrApp) getApplicationContext();
-//            getFood;
-//            hungrApp.addRestaurantsToLiked(food);
+            // If Liked food, add food's restaurants to Liked list
+            Food food = foods.get(foodID);
+            hungrApp.addRestaurantsToLiked(food);
         }
         RotateAnimation rotateAnim = new RotateAnimation(0, MAX_ROTATION*sign, pivotX, pivotY);
         rotateAnim.setDuration(animDuration);
@@ -377,6 +440,7 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
         btnNope.setImageBitmap(null);
         btnYeah.setImageBitmap(null);
         //btnInfo.setImageBitmap(null);
+        btnNoMoreFood.setImageBitmap(null);
     }
 
 }

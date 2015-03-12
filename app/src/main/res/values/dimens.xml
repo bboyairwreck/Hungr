@@ -1,7 +1,11 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">32dp</dimen>
-    <dimen name="activity_vertical_margin">32dp</dimen>
+    <dimen name="activity_top_margin">32dp</dimen>
     <dimen name="starSize">15dp</dimen>
     <dimen name="starPadding">10dp</dimen>
+    <dimen name="yeahNopeHeight">120dp</dimen>
+    <dimen name="resultsHeight">40dp</dimen>
+    <dimen name="yeahNope_plus_results">202dp</dimen>
+    <dimen name="activity_bottom_margin">10dp</dimen>
 </resources>
