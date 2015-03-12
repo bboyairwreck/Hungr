@@ -5,9 +5,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <application
+     <application
         android:name=".HungrApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_hungr"
@@ -27,7 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
         <activity
             android:name=".AboutActivity"
             android:label="@string/title_activity_about" >
@@ -35,7 +33,7 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" >
-=======
+        </activity>
         <activity android:name=".RestaurantList"
             android:label="Hungr"
             android:screenOrientation="portrait">
@@ -43,8 +41,16 @@
         <activity android:name=".RestaurantDetails"
             android:label="Hungr"
             android:screenOrientation="portrait">
->>>>>>> Added RestaurantDetails and RestaurantList activities, as well as several images and the associated XML files
         </activity>
-    </application>
+        <service
+            android:name=".DownloadService"
+            android:exported="false" >
+        </service>
 
+        <receiver
+            android:name=".AlarmReceiver"
+            android:enabled="true"
+            android:exported="true" >
+        </receiver>
+    </application>
 </manifest>
