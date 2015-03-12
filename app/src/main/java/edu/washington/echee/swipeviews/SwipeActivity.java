@@ -56,7 +56,7 @@ public class SwipeActivity extends HungrBaseActivity implements View.OnTouchList
     Bitmap bitmap;
     ImageButton btnNope;
     ImageButton btnYeah;
-    ImageButton btnInfo;
+    ImageButton btnClear;
     ImageButton btnNoMoreFood;
 
     public static final int MAX_CARDS = 5;         // max number of cards on screen at a time
@@ -83,13 +83,13 @@ public class SwipeActivity extends HungrBaseActivity implements View.OnTouchList
         int buttonSize = 100;
         btnNope = (ImageButton) findViewById(R.id.btnNope);
         btnYeah = (ImageButton) findViewById(R.id.btnYeah);
-        //btnInfo = (ImageButton) findViewById(R.id.btnInfo);
+        btnClear = (ImageButton) findViewById(R.id.btnClear);
 
         btnNope.setImageBitmap(
                 decodeSampledBitmapFromResource(getResources(), R.drawable.nope, buttonSize, buttonSize));
         btnYeah.setImageBitmap(
                 decodeSampledBitmapFromResource(getResources(), R.drawable.yeah, buttonSize, buttonSize));
-        //btnInfo.setImageBitmap(
+        //btnClear.setImageBitmap(
         //        decodeSampledBitmapFromResource(getResources(), R.drawable.info, buttonSize, buttonSize));
 
 
@@ -104,6 +104,15 @@ public class SwipeActivity extends HungrBaseActivity implements View.OnTouchList
                 showRestaurantList();
             }
         });
+
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearLikedRestaurantList();
+            }
+        });
+
+
     }
 
     /*
@@ -451,6 +460,12 @@ public class SwipeActivity extends HungrBaseActivity implements View.OnTouchList
         };
     }
 
+    private void clearLikedRestaurantList() {
+        curFoodIndex = 1;
+        addCards(MAX_CARDS);
+        hungrApp.clearLikedRestaurants();
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -458,7 +473,7 @@ public class SwipeActivity extends HungrBaseActivity implements View.OnTouchList
         imageView.setImageBitmap(null);
         btnNope.setImageBitmap(null);
         btnYeah.setImageBitmap(null);
-        //btnInfo.setImageBitmap(null);
+        btnClear.setImageBitmap(null);
         btnNoMoreFood.setImageBitmap(null);
     }
 

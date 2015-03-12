@@ -46,8 +46,8 @@
                 android:scaleType="fitCenter"/>
 
             <ImageButton
-                android:id="@+id/btnInfo"
-                android:src="@null"
+                android:id="@+id/btnClear"
+                android:src="@drawable/ic_action_discard"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_weight="1"

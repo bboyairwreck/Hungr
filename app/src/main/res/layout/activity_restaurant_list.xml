@@ -1,38 +1,103 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/dlDrawerLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent" >
 
-    tools:context="edu.washington.echee.swipeviews.RestaurantList">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Results"
-        android:id="@+id/textView"
-        android:textColor="@color/orange_main"
-        android:textSize="40dp"
-        android:layout_centerHorizontal="true" />
+        tools:context="edu.washington.echee.swipeviews.RestaurantList">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="You matched with these restaurants!"
-        android:id="@+id/textView2"
-        android:textAlignment="center"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Results"
+            android:id="@+id/textView"
+            android:textColor="@color/orange_main"
+            android:textSize="40dp"
+            android:layout_centerHorizontal="true" />
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/restaurantList"
-        android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:clickable="false"
-        android:divider="@color/orange_main" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="You matched with these restaurants!"
+            android:id="@+id/textView2"
+            android:textAlignment="center"
+            android:layout_below="@+id/textView"
+            android:layout_centerHorizontal="true" />
 
-</RelativeLayout>
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/restaurantList"
+            android:layout_below="@+id/textView2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:clickable="false"
+            android:divider="@color/orange_main" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="start">
+
+        <RelativeLayout android:id="@+id/rlProfileBox"
+            android:layout_width="match_parent"
+            android:layout_height="125dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:background="@color/orange_main">
+
+            <!--<ImageView-->
+            <!--android:id="@+id/profile_background"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:adjustViewBounds="true"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:scaleType="centerCrop"/>-->
+
+            <ImageView
+                android:id="@+id/ivProfileImage"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:adjustViewBounds="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/neward_ted" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_below="@+id/ivProfileImage"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:text="Ted Neward"/>
+
+        </RelativeLayout>
+
+        <ListView android:id="@+id/lvNavDrawer"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:background="#fff"/>
+
+    </LinearLayout>
+
+</android.support.v4.widget.DrawerLayout>

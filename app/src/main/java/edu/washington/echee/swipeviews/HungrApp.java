@@ -254,4 +254,8 @@ public class HungrApp extends Application {
                     Settings.Global.AIRPLANE_MODE_ON, 0) != 0;
         }
     }
+
+    public void clearLikedRestaurants() {
+        likedRestaurants = new HashSet<>();
+    }
 }
