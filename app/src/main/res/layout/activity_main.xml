@@ -116,11 +116,12 @@
 
         <ImageView
             android:id="@+id/ivProfileImage"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:adjustViewBounds="true"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/rabbit_profile" />
+            android:layout_marginTop="20dp"
+            android:src="@drawable/neward_ted" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -130,7 +131,7 @@
             android:layout_below="@+id/ivProfileImage"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
-            android:text="Steven Raden"/>
+            android:text="Ted Neward"/>
 
     </RelativeLayout>
 
