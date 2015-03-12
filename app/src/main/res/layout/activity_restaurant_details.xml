@@ -6,38 +6,71 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent" >
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-        android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
 
-        tools:context="edu.washington.echee.swipeviews.RestaurantDetails">
+    tools:context="edu.washington.echee.swipeviews.RestaurantDetails">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="restaurant title"
-            android:id="@+id/restaurant_title"
-            android:textColor="@color/orange_main"
-            android:textSize="40dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:singleLine="true"
-            android:textAlignment="center" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="restaurant title"
+        android:id="@+id/restaurant_title"
+        android:textColor="@color/orange_main"
+        android:textSize="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:singleLine="false"
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/restaurantImage"
-            android:layout_below="@+id/restaurant_title"
-            android:layout_centerHorizontal="true"
-            android:minWidth="150dp"
-            android:minHeight="100dp"
-            android:maxHeight="300dp"
-            android:maxWidth="300dp" />
-    </RelativeLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/restaurantImage"
+        android:minWidth="300dp"
+        android:minHeight="300dp"
+        android:maxHeight="300dp"
+        android:maxWidth="300dp"
+        android:layout_below="@+id/restaurant_title"
+        android:layout_centerHorizontal="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="$$$"
+        android:id="@+id/priceRange"
+        android:layout_below="@+id/restaurantImage"
+        android:layout_alignLeft="@+id/restaurantImage"
+        android:layout_alignStart="@+id/restaurantImage"
+        android:layout_marginTop="13dp" />
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBar"
+        android:isIndicator="true"
+        android:layout_below="@+id/restaurantImage"
+        android:layout_alignRight="@+id/restaurantImage"
+        android:layout_alignEnd="@+id/restaurantImage" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="descr"
+        android:id="@+id/description"
+        android:layout_below="@+id/ratingBar"
+        android:layout_alignLeft="@+id/priceRange"
+        android:layout_alignStart="@+id/priceRange"
+        android:layout_alignRight="@+id/ratingBar"
+        android:layout_alignEnd="@+id/ratingBar" />
+
+</RelativeLayout>
 
     <LinearLayout
         android:layout_width="280dp"

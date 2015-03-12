@@ -7,7 +7,8 @@
 			"restaurants": [
 				"Schultzy's Sausage",
 				"Po Dog",
-				"Diggity Dog"
+				"Diggity Dog",
+				"Ted's House"
 			]
 		},
 		{
@@ -17,7 +18,8 @@
 			"restaurants": [
 				"Pho Than Brothers",
 				"Lucky's Pho",
-				"Pho Cyclo Cafe"
+				"Pho Cyclo Cafe",
+				"Ted's House"
 			]
 		},
 		{
@@ -28,7 +30,8 @@
 				"Shultzy's Sausage",
 				"Calozzi's Cheesesteaks",
 				"The Original Philly's",
-				"Philly Boys Cheesesteaks"
+				"Philly Boys Cheesesteaks",
+				"Ted's House"
 			]
 		},
 		{
@@ -37,7 +40,8 @@
 			"img":"burrito",
 			"restaurants": [
 				"Chipotle",
-				"Gorditos"
+				"Gorditos",
+				"Ted's House"
 			]
 		},
 		{
@@ -47,7 +51,8 @@
 			"restaurants": [
 				"Portage Bay",
 				"Dish",
-				"Americana"
+				"Americana",
+				"Ted's House"
 			]
 		},
 		{
@@ -57,7 +62,8 @@
 			"restaurants": [
 				"Portage Bay",
 				"Dish",
-				"Americana"
+				"Americana",
+				"Ted's House"
 			]
 		},
 		{
@@ -67,7 +73,8 @@
 			"restaurants": [
 				"HoneyHole",
 				"The Swinery",
-				"Ugly Mug Cafe"
+				"Ugly Mug Cafe",
+				"Ted's House"
 			]
 		},
 		{
@@ -78,7 +85,8 @@
 				"HoneyHole",
 				"Potbelly Sandwich Shop",
 				"The Swinery",
-				"Ugly Mug Cafe"
+				"Ugly Mug Cafe",
+				"Ted's House"
 			]
 		},
 		{
@@ -88,7 +96,8 @@
 			"restaurants": [
 				"Chipotle",
 				"Portage Bay",
-				"The Swinery"
+				"The Swinery",
+				"Ted's House"
 			]
 		}
 	],
@@ -216,6 +225,13 @@
 			"price":"3",
 			"rating":"2",
 			"img":"potbelly_sandwich_shop"
+		},
+		{
+			"title":"Ted's House",
+			"desc":"Food, Magic, and ponytails. This is the place!",
+			"price":"$",
+			"rating":"5",
+			"img":"teds_house"
 		}
 	]
 }

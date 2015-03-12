@@ -2,7 +2,9 @@ package edu.washington.echee.swipeviews;
 
 import android.annotation.TargetApi;
 import android.app.Application;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -169,6 +171,15 @@ public class HungrApp extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
+
+        // Check if alarm has already been created
+        Intent alarmIntent = new Intent(this, AlarmReceiver.class);
+        boolean alarmUP = (PendingIntent.getBroadcast(this, Constants.MY_ALARM, alarmIntent,
+                PendingIntent.FLAG_NO_CREATE) != null);
+
+        if (alarmUP) {
+            DownloadService.startOrStopAlarm(this, false);
+        }
     }
 
     // reads InputStream of JSON file and returns the file in JSON String format

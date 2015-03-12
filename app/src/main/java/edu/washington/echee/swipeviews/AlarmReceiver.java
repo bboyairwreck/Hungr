@@ -29,7 +29,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     private void showToast(Context context){
         String url = Constants.JSON_URL;
 
-        String toastMessage = "Checking updates from \"" + url + "\"";
+        String toastMessage = "Hungry is checking updates";
         Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show();
     }
 }

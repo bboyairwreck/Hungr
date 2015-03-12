@@ -24,6 +24,7 @@ public class RestaurantList extends HungrBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_list);
+        super.createNavDrawer(this);
 
         super.createNavDrawer(this);
 
