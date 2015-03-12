@@ -5,6 +5,7 @@
 package edu.washington.echee.swipeviews;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -101,6 +102,14 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+            }
+        });
+
+        ImageButton btnResults = (ImageButton) findViewById(R.id.ibResults);
+        btnResults.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showRestaurantList();
             }
         });
 
@@ -229,6 +238,19 @@ public class SwipeActivity extends ActionBarActivity implements View.OnTouchList
         layoutParams.topMargin = cardMargin;
         btnNoMoreFood.setLayoutParams(layoutParams);
         _root.addView(btnNoMoreFood, 0, layoutParams);
+
+        btnNoMoreFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showRestaurantList();
+            }
+        });
+    }
+
+    public void showRestaurantList(){
+        Log.i("SwipeActivity", "loading RestaurantList activity");
+//        Intent restaurantListIntent = new Intent(this, RestaurantList.class);
+//        startActivity(restaurantListIntent);
     }
 
     public static int calculateInSampleSize(

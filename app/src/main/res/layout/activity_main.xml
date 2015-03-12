@@ -70,10 +70,12 @@
 
         <RelativeLayout
             android:id="@+id/btnResults"
+            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/resultsHeight"
             android:layout_alignParentBottom="true">
             <ImageButton
+                android:id="@+id/ibResults"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:src="@drawable/results_button"
