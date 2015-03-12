@@ -250,8 +250,8 @@ public class SwipeActivity extends HungrBaseActivity implements View.OnTouchList
 
     public void showRestaurantList(){
         Log.i("SwipeActivity", "loading RestaurantList activity");
-//        Intent restaurantListIntent = new Intent(this, RestaurantList.class);
-//        startActivity(restaurantListIntent);
+        Intent restaurantListIntent = new Intent(this, RestaurantList.class);
+        startActivity(restaurantListIntent);
     }
 
     public static int calculateInSampleSize(

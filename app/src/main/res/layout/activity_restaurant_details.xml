@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+
+    tools:context="edu.washington.echee.swipeviews.RestaurantDetails">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="restaurant title"
+        android:id="@+id/restaurant_title"
+        android:textColor="@color/orange_main"
+        android:textSize="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:singleLine="true"
+        android:textAlignment="center" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/restaurantImage"
+        android:layout_below="@+id/restaurant_title"
+        android:layout_centerHorizontal="true"
+        android:minWidth="150dp"
+        android:minHeight="100dp"
+        android:maxHeight="300dp"
+        android:maxWidth="300dp" />
+</RelativeLayout>

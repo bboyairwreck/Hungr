@@ -27,6 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity
             android:name=".AboutActivity"
             android:label="@string/title_activity_about" >
@@ -34,6 +35,15 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" >
+=======
+        <activity android:name=".RestaurantList"
+            android:label="Hungr"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".RestaurantDetails"
+            android:label="Hungr"
+            android:screenOrientation="portrait">
+>>>>>>> Added RestaurantDetails and RestaurantList activities, as well as several images and the associated XML files
         </activity>
     </application>
 
