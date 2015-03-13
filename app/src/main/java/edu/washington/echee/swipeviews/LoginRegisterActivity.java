@@ -7,6 +7,8 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 
 public class LoginRegisterActivity extends Activity {
@@ -25,6 +27,13 @@ public class LoginRegisterActivity extends Activity {
         ft.add(R.id.loginActivityRoot, loginFragment);
         ft.commit();
 
+        Button btnSkipLogIn = (Button) findViewById(R.id.btnSkipLogIn);
+        btnSkipLogIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSwipe();
+            }
+        });
 
         if (savedInstanceState == null) {
 

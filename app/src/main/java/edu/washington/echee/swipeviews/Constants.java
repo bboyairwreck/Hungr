@@ -6,5 +6,5 @@ package edu.washington.echee.swipeviews;
 public class Constants {
     public static final int MY_ALARM = 123;
     public static final String JSON_URL = "http://ericchee.com/hungr/data.json";
-    public static final int DOWNLOAD_INTERVAL_MIN = 2;
+    public static final int DOWNLOAD_INTERVAL_MIN = 60;
 }
