@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/results"
                 android:layout_centerInParent="true"
-                android:id="@+id/textview" />
+                android:id="@+id/tvResults" />
         </RelativeLayout>
     </RelativeLayout>
 

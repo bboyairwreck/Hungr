@@ -47,8 +47,7 @@ public class LoginRegisterActivity extends Activity {
         Intent swipeActivityIntent = new Intent(this, SwipeActivity.class);
         startActivity(swipeActivityIntent);
 
-        // TODO enable finish after testing so cannot return to sign-in/registration
-        // finish();
+        finish();
     }
 
     @Override

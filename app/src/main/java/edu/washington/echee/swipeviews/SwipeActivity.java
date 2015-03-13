@@ -33,6 +33,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -59,8 +61,8 @@ public class SwipeActivity extends HungrBaseActivity implements View.OnTouchList
     ImageButton btnClear;
     ImageButton btnNoMoreFood;
 
-    public static final int MAX_CARDS = 5;         // max number of cards on screen at a time
-    public static final int MIN_CARDS = 2;         // min number of cards on screen at a time
+    public static final int MAX_CARDS = 7;         // max number of cards on screen at a time
+    public static final int MIN_CARDS = 3;         // min number of cards on screen at a time
     public static final float GO_LEFT = -1000f;   // max degrees to rotate card
     public static final float GO_RIGHT = 1000f;   // max degrees to rotate card
     public static final int cardMargin = 67;
@@ -224,6 +226,10 @@ public class SwipeActivity extends HungrBaseActivity implements View.OnTouchList
     }
 
     private void addNoMoreFoodButton(){
+        if (btnNoMoreFood != null) {
+            _root.removeView(btnNoMoreFood);
+        }
+
         int cardWidth = this.screenWidth - (cardMargin * 2);    // width of each card
         int leftMargin = cardMargin;
 
@@ -360,6 +366,9 @@ public class SwipeActivity extends HungrBaseActivity implements View.OnTouchList
         } else {
             // If Liked food, add food's restaurants to Liked list
             Food food = foods.get(foodID);
+
+            updateResultsButton();
+
             hungrApp.addRestaurantsToLiked(food);
         }
         RotateAnimation rotateAnim = new RotateAnimation(0, MAX_ROTATION*sign, pivotX, pivotY);
@@ -378,6 +387,14 @@ public class SwipeActivity extends HungrBaseActivity implements View.OnTouchList
 
         // Animate card off screen and remove it
         v.startAnimation(animSet);
+    }
+
+    private void updateResultsButton(){
+        // Format Results button to Results (n) for number of likes
+        TextView tvResults = (TextView) findViewById(R.id.tvResults);
+        String resultsString = getResources().getString(R.string.results);
+        resultsString += " (" + hungrApp.getLikedRestaurants().size() + ")";
+        tvResults.setText(resultsString);
     }
 
     /*
@@ -461,9 +478,12 @@ public class SwipeActivity extends HungrBaseActivity implements View.OnTouchList
     }
 
     private void clearLikedRestaurantList() {
-        curFoodIndex = 1;
+        curFoodIndex = 0;
+
+        addNoMoreFoodButton();
         addCards(MAX_CARDS);
         hungrApp.clearLikedRestaurants();
+        updateResultsButton();
     }
 
     @Override
