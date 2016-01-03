@@ -24,7 +24,7 @@ public class LoginRegisterActivity extends Activity {
 
         ft.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left);
 
-        ft.add(R.id.loginActivityRoot, loginFragment);
+        ft.add(R.id.loginActivityRoot, loginFragment, Constants.LOGIN_FRAGMENT_TAG);
         ft.commit();
 
         Button btnSkipLogIn = (Button) findViewById(R.id.btnSkipLogIn);

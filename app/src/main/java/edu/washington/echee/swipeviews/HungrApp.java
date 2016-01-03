@@ -46,7 +46,7 @@ public class HungrApp extends Application {
         }
     }
 
-    public HungrApp getInstance(){
+    public static HungrApp getInstance(){
         return instance;
     }
 
